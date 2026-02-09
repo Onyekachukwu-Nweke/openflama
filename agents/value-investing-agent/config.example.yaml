@@ -1,0 +1,26 @@
+provider: ollama
+model: qwen2.5:7b
+temperature: 0.2
+
+valuation:
+  discount_rate: 0.10
+  terminal_growth: 0.03
+  safety_margin: 0.25
+  projection_years: 10
+
+price_window: 252
+
+# Alternative provider configs:
+#
+# For llama.cpp:
+#   provider: llamacpp
+#   model: local-gguf
+#
+# For stub (CI/testing):
+#   provider: openai_stub
+#   model: stub-v1
+#
+# Environment variable overrides:
+#   FLAMA_LLM_PROVIDER=ollama
+#   FLAMA_OLLAMA_MODEL=llama3
+#   FLAMA_OLLAMA_URL=http://localhost:11434

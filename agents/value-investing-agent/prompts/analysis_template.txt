@@ -1,0 +1,52 @@
+Analyze {ticker} as a potential value investment as of {as_of_date}.
+
+COMPANY PROFILE:
+{profile_json}
+
+FINANCIAL DATA:
+{financials_json}
+
+PRICE DATA:
+{price_json}
+
+COMPUTED VALUE METRICS:
+{metrics_json}
+
+INTRINSIC VALUE ESTIMATES:
+{valuation_json}
+
+Based on the above data, produce a complete value investing analysis. Return a JSON object with exactly this structure:
+
+{{
+  "thesis": {{
+    "summary": "2-3 sentence investment thesis",
+    "sector": "sector name",
+    "competitive_position": "description of moat and competitive dynamics"
+  }},
+  "financials_summary": {{
+    "revenue_growth": "assessment of revenue growth",
+    "margin_trend": "assessment of margins",
+    "debt_level": "assessment of leverage",
+    "cash_flow_quality": "assessment of FCF"
+  }},
+  "valuation": {{
+    "method": "methods used",
+    "intrinsic_value_low": number,
+    "intrinsic_value_high": number,
+    "current_price": number,
+    "margin_of_safety": "percentage or description"
+  }},
+  "moat_analysis": {{
+    "moat_type": "type of competitive advantage",
+    "moat_durability": "high/medium/low with reasoning",
+    "management_quality": "assessment"
+  }},
+  "risks": ["risk 1", "risk 2", "risk 3"],
+  "recommendation": {{
+    "action": "buy|hold|watch|avoid",
+    "confidence": 0.0 to 1.0,
+    "reasoning": "1-2 sentence justification"
+  }}
+}}
+
+Important: This analysis uses synthetic data, so keep confidence appropriately low and note data limitations in your reasoning. Return ONLY the JSON object, no additional text.

@@ -41,6 +41,14 @@ openflama/
 3. **Mean Reversion** - Short-term vs long-term mean deviation with RSI
 4. **Feature-Based** - Momentum crossover + RSI + volatility regime
 
+## Value Investing Agent
+- Located at `agents/value-investing-agent/`
+- Pluggable LLM providers: Ollama, llama.cpp (stub), OpenAI stub
+- Provider layer at `packages/core-py/openflama/llm_providers/`
+- Run with: `cd agents/value-investing-agent && python agent.py --ticker AAPL --provider openai_stub`
+- Tests: `cd agents/value-investing-agent && python tests/test_agent.py`
+- Docs: `docs/agents/creating-agents.md`
+
 ## Key Files
 - `shared/schema.ts` - Database schema and Zod validation
 - `server/forecasting.ts` - Forecasting engine with all models
@@ -50,6 +58,9 @@ openflama/
 - `client/src/pages/landing.tsx` - Landing page
 - `client/src/pages/dashboard.tsx` - Dashboard page
 - `packages/sdk-ts/src/index.ts` - TypeScript SDK client
+- `agents/value-investing-agent/agent.py` - Value Investing Agent
+- `agents/value-investing-agent/tools.py` - Financial data tools
+- `packages/core-py/openflama/llm_providers/` - LLM provider layer
 
 ## OSS Files
 - `README.md` - Root project README
