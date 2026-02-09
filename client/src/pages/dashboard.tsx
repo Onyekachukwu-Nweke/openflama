@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +17,6 @@ import {
   Clock,
   Layers,
   AlertTriangle,
-  X,
 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 
@@ -493,34 +492,7 @@ function HealthStatus() {
   );
 }
 
-const DISMISS_KEY = "openflama_dashboard_overlay_dismissed";
-
 function PreviewOverlay() {
-  const [dismissed, setDismissed] = useState(() => {
-    return sessionStorage.getItem(DISMISS_KEY) === "true";
-  });
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const handleDismiss = useCallback(() => {
-    setDismissed(true);
-    sessionStorage.setItem(DISMISS_KEY, "true");
-  }, []);
-
-  useEffect(() => {
-    if (dismissed) return;
-
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") handleDismiss();
-    }
-    document.addEventListener("keydown", onKeyDown);
-
-    cardRef.current?.focus();
-
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [dismissed, handleDismiss]);
-
-  if (dismissed) return null;
-
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center p-4"
@@ -530,27 +502,13 @@ function PreviewOverlay() {
     >
       <div
         className="absolute inset-0 bg-background/60 backdrop-blur-md"
-        onClick={handleDismiss}
         aria-hidden="true"
       />
 
       <Card
-        ref={cardRef}
-        tabIndex={-1}
         className="relative z-10 w-full max-w-md outline-none"
         data-testid="card-preview-overlay"
       >
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-3 right-3"
-          onClick={handleDismiss}
-          aria-label="Close"
-          data-testid="button-close-overlay"
-        >
-          <X className="h-4 w-4" />
-        </Button>
-
         <CardContent className="pt-8 pb-6 px-6 text-center space-y-5">
           <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
             <BarChart3 className="h-6 w-6 text-primary" />
