@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  Activity,
   BarChart3,
   BookOpen,
   Brain,
@@ -896,7 +895,7 @@ export default function DocsPage() {
               <Menu className="h-4 w-4" />
             </Button>
             <Link href="/" className="flex items-center gap-2">
-              <Activity className="h-5 w-5 text-primary" />
+              <img src="/flama-logo.png" alt="OpenFlama" className="h-6 w-6" />
               <span className="font-bold text-base">
                 Open<span className="text-primary">Flama</span>
               </span>

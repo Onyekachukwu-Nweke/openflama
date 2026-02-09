@@ -567,7 +567,7 @@ export default function Dashboard() {
               </Button>
             </Link>
             <div className="flex items-center gap-2">
-              <Activity className="h-4 w-4 text-primary" />
+              <img src="/flama-logo.png" alt="OpenFlama" className="h-5 w-5" />
               <span className="font-bold text-sm">
                 Open<span className="text-primary">Flama</span>
               </span>

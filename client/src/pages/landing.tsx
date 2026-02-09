@@ -387,7 +387,7 @@ function Footer() {
     <footer className="border-t border-border/50 py-8 px-6">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <Activity className="h-4 w-4 text-primary" />
+          <img src="/flama-logo.png" alt="OpenFlama" className="h-5 w-5" />
           <span className="font-bold text-sm">
             Open<span className="text-primary">Flama</span>
           </span>
@@ -422,7 +422,7 @@ export default function Landing() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/30 bg-background/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2">
-            <Activity className="h-5 w-5 text-primary" />
+            <img src="/flama-logo.png" alt="OpenFlama" className="h-6 w-6" />
             <span className="font-bold text-base">
               Open<span className="text-primary">Flama</span>
             </span>
