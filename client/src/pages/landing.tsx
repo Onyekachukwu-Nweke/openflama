@@ -47,6 +47,15 @@ function HeroSection() {
         animate="visible"
         variants={stagger}
       >
+        <motion.div variants={fadeUp} className="mb-4">
+          <img
+            src="/flama-logo.png"
+            alt="OpenFlama logo"
+            className="h-16 w-16 mx-auto"
+            data-testid="img-hero-logo"
+          />
+        </motion.div>
+
         <motion.div variants={fadeUp} className="mb-6">
           <Badge variant="outline" className="px-4 py-1.5 text-xs font-mono tracking-wider border-primary/30 text-primary">
             OPEN SOURCE v0.1.0
