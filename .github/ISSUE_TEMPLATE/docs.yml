@@ -1,0 +1,38 @@
+name: Documentation
+description: Report missing, incorrect, or unclear documentation
+title: "[Docs]: "
+labels: ["area:docs"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help us improve the docs! Describe what's missing or unclear.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What documentation is missing, incorrect, or unclear?
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: Which file or page is this about?
+      placeholder: "e.g. docs/architecture.md, README.md, API section"
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Improvement
+      description: How should the documentation be improved?
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other context or references.

@@ -1,0 +1,143 @@
+You are working inside the GitHub repository: https://github.com/maquenflow/openflama
+
+GOAL
+Make the repo “contributor-ready” for an open-source community launch: add onboarding docs, templates, local DB setup, CI, and a community launch plan (labels/milestones/issues). You have a GitHub token with sufficient permissions available via Replit Secrets, so you SHOULD push changes to the repo.
+
+AUTH / PUSH
+- Assume secrets exist (do not print them):
+  - GITHUB_TOKEN
+  - GITHUB_OWNER (maquenflow)
+  - GITHUB_REPO (openflama)
+- If the git remote is already configured, do NOT change it.
+- You must commit in small increments and push to `main` once everything passes locally (or at least builds).
+- Never write tokens into files. Never echo secret values.
+
+IMPORTANT CONSTRAINT
+- You may not have permission to create GitHub labels/milestones/issues automatically.
+- If GitHub CLI (`gh`) is available AND authenticated, you may create labels/milestones/issues.
+- Otherwise, generate everything as Markdown in `docs/community-launch.md` (copy/paste-ready).
+
+========================
+A) REPO CHANGES (must implement)
+========================
+
+1) Contributor onboarding artifacts
+- Create a `.env.example` at repo root with at least:
+  - DATABASE_URL=postgresql://...
+  - SESSION_SECRET=change_me
+  - any other env vars required by the app (inspect existing code and include only what is actually used)
+- Create `CONTRIBUTING.md` with:
+  - Local run instructions (point to README quickstart and include exact commands)
+  - How to pick/claim an issue (comment to claim, first timers guidance)
+  - Coding standards (lint/test/typecheck) based on what exists in package.json
+  - Branch naming & PR process
+  - DB migrations / Drizzle workflow (e.g., `npm run db:push`) ONLY if it actually exists; otherwise document the correct command or add a TODO.
+- Add `CODE_OF_CONDUCT.md` (Contributor Covenant v2.1) and `SECURITY.md` (basic vulnerability reporting).
+
+2) GitHub Issue Templates + PR Template
+Create:
+- `.github/ISSUE_TEMPLATE/bug_report.yml`
+- `.github/ISSUE_TEMPLATE/feature_request.yml`
+- `.github/ISSUE_TEMPLATE/docs.yml`
+- `.github/ISSUE_TEMPLATE/config.yml` (set contact links to the correct repo URL; if Discussions not enabled, link to Issues)
+- `.github/PULL_REQUEST_TEMPLATE.md`
+Use structured fields (repro steps, expected behavior, logs, acceptance criteria checklists). Keep them clean and professional.
+
+3) Local Postgres via Docker Compose
+- Create `docker-compose.yml` with Postgres 15+ (plus a named volume).
+- Create `docs/local-db.md` with step-by-step:
+  - docker compose up -d
+  - set DATABASE_URL (example)
+  - install deps
+  - run DB setup command (drizzle push/migrate, based on repo)
+  - run dev server(s)
+- Ensure docs align with README quickstart.
+
+4) CI via GitHub Actions
+- Create `.github/workflows/ci.yml`
+- Trigger: PR + push to main
+- Use Node 20
+- Run:
+  - `npm ci`
+  - then run only scripts that actually exist in package.json (lint/typecheck/test/build)
+- If critical scripts are missing but tooling already exists, add minimal scripts (only if clearly supported). Otherwise document TODOs in README and/or docs.
+
+5) Improve README for contributors
+Update README adding:
+- “Start here” section:
+  - Link to CONTRIBUTING.md
+  - Link to Issues page
+  - Suggest label filters: `good first issue`, `help wanted`
+- “Community roadmap” (short):
+  - Mention milestone “v0.1 Community Launch”
+- “How to contribute”:
+  - pick issue → comment to claim → branch → PR → review
+- “Discussions” section:
+  - If Discussions not enabled, add NOTE: “Enable Discussions in repo settings for Q&A”.
+
+6) Optional but high value (do if time)
+- Add `docs/architecture.md` with a short, diagram-like overview:
+  - apps/web, apps/api, packages/sdk-ts, packages/core-py, db/drizzle (adjust to actual repo structure)
+  - request flow for /predict and /backtest (API → core → db → web)
+
+========================
+B) COMMUNITY LAUNCH PLAN OUTPUT (must produce)
+========================
+If you cannot create labels/milestones/issues automatically, generate:
+- `docs/community-launch.md`
+
+Include:
+1) Label plan (exact names)
+- difficulty: good first issue, help wanted, first-timers-only, up-for-grabs
+- area: area:api, area:web, area:sdk, area:core-py, area:db, area:docs, area:ci
+- type: type:bug, type:enhancement, type:chore, type:security
+
+2) Milestone plan
+- “v0.1 Community Launch” including 8–12 issues
+
+3) 12 Issues (copy/paste-ready)
+For each:
+- Title
+- Recommended labels
+- Difficulty estimate (hours)
+- Context
+- Acceptance Criteria checklist
+Use this set, but adapt to the repo reality if something already exists:
+(1) Add .env.example + first-run sanity checklist
+(2) Docker compose for Postgres + local-db docs
+(3) GitHub issue templates + PR template
+(4) Curate 6 “good first issues” pack
+(5) Request validation for /predict and /backtest + consistent error shape
+(6) OpenAPI spec + /docs swagger UI
+(7) TS SDK strongly typed client + error handling
+(8) Dashboard: predictions table + detail drawer
+(9) Dashboard: backtests list + metric chips
+(10) Python core forecasting unit tests for baseline models
+(11) Model registry auto-discovery powering /models endpoint
+(12) Pluggable agent architecture interface + example agent + docs
+
+4) Promotion copy (ready-to-post)
+Include:
+- Short post for Reddit/Discord (6–10 lines)
+- Show HN title + first comment outline
+- Dev.to post outline (sections + bullets)
+Include repo link + issues link (do not paste raw URLs; use plain text references if needed).
+
+========================
+C) EXECUTION RULES
+========================
+- Don’t break existing functionality.
+- Keep docs concise but actionable.
+- Use consistent naming and existing conventions.
+- Prefer minimal dependencies.
+- Commit in logical chunks.
+- Push to `main` when done.
+
+FINAL OUTPUT REQUIRED
+At the end, print:
+1) Summary of changes (bullets)
+2) Any TODOs requiring manual GitHub UI steps (enable Discussions, create labels/milestone/issues if not automated)
+3) Exact git commands you used (without tokens) and confirmation that you pushed successfully.
+
+
+“If gh is available and authenticated, create the labels and milestone and open the 12 issues automatically; otherwise write everything to docs/community-launch.md.”
