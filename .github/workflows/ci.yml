@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-typecheck:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+  test-api:
+    name: API Smoke Test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: openflama_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://test:test@localhost:5432/openflama_test
+      SESSION_SECRET: test-secret-for-ci
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run db:push
+
+      - name: Start server and run smoke tests
+        run: |
+          npm run dev &
+          SERVER_PID=$!
+
+          for i in $(seq 1 30); do
+            if curl -s http://localhost:5000/api/v1/health > /dev/null 2>&1; then
+              break
+            fi
+            sleep 1
+          done
+
+          echo "=== Health Check ==="
+          curl -sf http://localhost:5000/api/v1/health
+          echo ""
+
+          echo "=== Models ==="
+          curl -sf http://localhost:5000/api/v1/models
+          echo ""
+
+          echo "=== Predict ==="
+          curl -sf -X POST http://localhost:5000/api/v1/predict \
+            -H "Content-Type: application/json" \
+            -d '{"ticker":"AAPL","horizon":"5d","target":"return"}'
+          echo ""
+
+          kill $SERVER_PID 2>/dev/null || true
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+  sdk-ts:
+    name: SDK TypeScript Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/sdk-ts
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install typescript --save-dev
+      - run: npx tsc --noEmit

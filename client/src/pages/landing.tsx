@@ -379,7 +379,7 @@ function Footer() {
             Open<span className="text-primary">Flama</span>
           </span>
           <span className="text-xs text-muted-foreground ml-2">
-            Financial Large-Language Model Agora
+            Financial Large-Language Agentic Model Agora
           </span>
         </div>
         <div className="flex items-center gap-6 text-xs text-muted-foreground">

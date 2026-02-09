@@ -15,6 +15,18 @@ OpenFlama is an open-source agentic finance runtime and forecasting engine. It p
   - `predictions` table: stores all prediction results
   - `backtest_runs` table: stores backtest configurations and metrics
 
+## Monorepo Structure (for GitHub)
+```
+openflama/
+  apps/api/         API READMEs and documentation
+  apps/web/         Web frontend READMEs and documentation
+  packages/sdk-ts/  TypeScript SDK with full API client
+  packages/core-py/ Python core library scaffold
+  agents/           Pluggable financial agents (scaffold)
+  docs/             Architecture, roadmap, contributing docs
+  .github/          Issue templates, PR template, CI workflows
+```
+
 ## API Endpoints
 - `GET /api/v1/health` - Health check
 - `GET /api/v1/models` - List available forecasting models
@@ -37,8 +49,20 @@ OpenFlama is an open-source agentic finance runtime and forecasting engine. It p
 - `server/seed.ts` - Database seeding
 - `client/src/pages/landing.tsx` - Landing page
 - `client/src/pages/dashboard.tsx` - Dashboard page
+- `packages/sdk-ts/src/index.ts` - TypeScript SDK client
+
+## OSS Files
+- `README.md` - Root project README
+- `LICENSE` - MIT License
+- `CODE_OF_CONDUCT.md` - Contributor Covenant
+- `CONTRIBUTING.md` - Contribution guidelines
+- `SECURITY.md` - Security policy
+- `.github/workflows/ci.yml` - GitHub Actions CI pipeline
 
 ## Design
 - Dark-first theme (black background + red primary accents)
 - Font: Inter for sans, JetBrains Mono for code
 - All CSS variables are dark-mode compatible
+
+## GitHub Push
+- Run `./push-to-github.sh` to push to GitHub (requires GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO secrets)
