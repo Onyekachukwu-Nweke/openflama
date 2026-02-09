@@ -1,0 +1,37 @@
+Please add a “Dashboard Preview Unavailable” overlay to the Dashboard page.
+
+GOAL / UX
+- When a user navigates to the Dashboard page, show a centered notification card/modal.
+- The background (the dashboard page behind it) must be blurred/dimmed so it’s not readable, but it should still be clear that there is a dashboard layout behind the overlay.
+- The overlay should block interactions with the underlying dashboard (no clicks/scroll on background).
+
+CONTENT (Card/Modal)
+- Title: “Preview not available”
+- Subtitle/body: “Currently under development.”
+- Add a short line below: “Want to help finish it?”
+- Add a GitHub CTA at the bottom:
+  - A GitHub icon + text link/button: “Contribute on GitHub”
+  - Clicking opens the OpenFlama GitHub repo in a new tab (use the existing repo URL used elsewhere in the site if available).
+- Optional: include a small secondary text under the button: “PRs welcome.”
+
+BEHAVIOR
+- The overlay should appear by default (until the dashboard is implemented).
+- Provide a simple way to dismiss it (X icon top-right OR “Close” button). If dismissed, keep the dashboard visible (even if partially incomplete).
+- Remember dismiss state for the session (sessionStorage) so it doesn’t pop up again during the same session after closing.
+
+IMPLEMENTATION NOTES
+- Reuse existing UI components/styles (Card/Modal/Button) if the project already has them.
+- Use a backdrop with blur (e.g., backdrop-filter) + semi-transparent dark overlay.
+- Ensure accessibility:
+  - Focus should move to the modal when opened.
+  - Escape key closes the modal.
+  - Background should be aria-hidden while modal is open.
+
+ACCEPTANCE CRITERIA
+- Dashboard page shows a blurred/dimmed background with a centered card.
+- Card contains the exact text:
+  - “Preview not available”
+  - “Currently under development.”
+- A GitHub icon + “Contribute on GitHub” CTA is present and opens the repo in a new tab.
+- Modal blocks interaction with the background and is responsive on mobile.
+- Dismiss works and is remembered for the session.

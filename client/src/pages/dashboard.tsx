@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +17,7 @@ import {
   Clock,
   Layers,
   AlertTriangle,
+  X,
 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 
@@ -492,9 +493,113 @@ function HealthStatus() {
   );
 }
 
+const DISMISS_KEY = "openflama_dashboard_overlay_dismissed";
+
+function PreviewOverlay() {
+  const [dismissed, setDismissed] = useState(() => {
+    return sessionStorage.getItem(DISMISS_KEY) === "true";
+  });
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleDismiss = useCallback(() => {
+    setDismissed(true);
+    sessionStorage.setItem(DISMISS_KEY, "true");
+  }, []);
+
+  useEffect(() => {
+    if (dismissed) return;
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") handleDismiss();
+    }
+    document.addEventListener("keydown", onKeyDown);
+
+    cardRef.current?.focus();
+
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [dismissed, handleDismiss]);
+
+  if (dismissed) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="preview-overlay-title"
+    >
+      <div
+        className="absolute inset-0 bg-background/60 backdrop-blur-md"
+        onClick={handleDismiss}
+        aria-hidden="true"
+      />
+
+      <Card
+        ref={cardRef}
+        tabIndex={-1}
+        className="relative z-10 w-full max-w-md outline-none"
+        data-testid="card-preview-overlay"
+      >
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute top-3 right-3"
+          onClick={handleDismiss}
+          aria-label="Close"
+          data-testid="button-close-overlay"
+        >
+          <X className="h-4 w-4" />
+        </Button>
+
+        <CardContent className="pt-8 pb-6 px-6 text-center space-y-5">
+          <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <BarChart3 className="h-6 w-6 text-primary" />
+          </div>
+
+          <div className="space-y-2">
+            <h2
+              id="preview-overlay-title"
+              className="text-xl font-bold tracking-tight"
+              data-testid="text-preview-title"
+            >
+              Preview not available
+            </h2>
+            <p
+              className="text-sm text-muted-foreground"
+              data-testid="text-preview-subtitle"
+            >
+              Currently under development.
+            </p>
+          </div>
+
+          <p className="text-sm text-muted-foreground/80">
+            Want to help finish it?
+          </p>
+
+          <div className="space-y-2">
+            <a
+              href="https://github.com/maquenflow/openflama"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button className="w-full" data-testid="button-contribute-github">
+                <SiGithub className="mr-2 h-4 w-4" />
+                Contribute on GitHub
+              </Button>
+            </a>
+            <p className="text-xs text-muted-foreground/60">PRs welcome.</p>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export default function Dashboard() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PreviewOverlay />
+
       <nav className="sticky top-0 z-50 border-b border-border/30 bg-background/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
