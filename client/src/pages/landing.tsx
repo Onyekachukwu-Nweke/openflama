@@ -90,7 +90,7 @@ function HeroSection() {
             </Button>
           </Link>
           <a
-            href="https://github.com/openflama"
+            href="https://github.com/maquenflow/openflama"
             target="_blank"
             rel="noopener noreferrer"
           >
