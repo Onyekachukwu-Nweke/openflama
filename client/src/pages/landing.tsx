@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import {
   Activity,
   BarChart3,
+  BookOpen,
   Brain,
   ChevronRight,
   Code2,
@@ -13,12 +14,15 @@ import {
   GitBranch,
   LineChart,
   Layers,
+  Menu,
   Shield,
   Terminal,
+  X,
   Zap,
   ArrowRight,
   ExternalLink,
 } from "lucide-react";
+import { useState } from "react";
 import { SiGithub } from "react-icons/si";
 
 const fadeUp = {
@@ -382,11 +386,15 @@ function Footer() {
             Financial Large-Language Agentic Model Agora
           </span>
         </div>
-        <div className="flex items-center gap-6 text-xs text-muted-foreground">
-          <a href="https://github.com/openflama" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
+        <div className="flex items-center gap-6 text-xs text-muted-foreground flex-wrap">
+          <a href="https://github.com/maquenflow/openflama" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
             <SiGithub className="h-3.5 w-3.5" />
             GitHub
           </a>
+          <Link href="/docs" className="flex items-center gap-1.5">
+            <BookOpen className="h-3.5 w-3.5" />
+            Docs
+          </Link>
           <Link href="/dashboard" className="flex items-center gap-1.5">
             <BarChart3 className="h-3.5 w-3.5" />
             Dashboard
@@ -398,6 +406,8 @@ function Footer() {
 }
 
 export default function Landing() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/30 bg-background/80 backdrop-blur-xl">
@@ -408,19 +418,66 @@ export default function Landing() {
               Open<span className="text-primary">Flama</span>
             </span>
           </Link>
-          <div className="flex items-center gap-3">
-            <a href="https://github.com/openflama" target="_blank" rel="noopener noreferrer">
+          <div className="hidden sm:flex items-center gap-3">
+            <a href="https://github.com/maquenflow/openflama" target="_blank" rel="noopener noreferrer">
               <Button variant="ghost" size="icon" data-testid="button-nav-github">
                 <SiGithub className="h-4 w-4" />
               </Button>
             </a>
+            <Link href="/docs">
+              <Button variant="ghost" size="sm" data-testid="button-nav-docs">
+                <BookOpen className="mr-1.5 h-4 w-4" />
+                Documentation
+              </Button>
+            </Link>
             <Link href="/dashboard">
               <Button size="sm" data-testid="button-nav-dashboard">
                 Dashboard
               </Button>
             </Link>
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="sm:hidden"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            data-testid="button-nav-mobile-toggle"
+          >
+            {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </Button>
         </div>
+        {mobileMenuOpen && (
+          <div className="sm:hidden border-t border-border/30 bg-background/95 backdrop-blur-xl px-6 py-3 space-y-2">
+            <a
+              href="https://github.com/maquenflow/openflama"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-muted-foreground hover-elevate"
+              data-testid="link-mobile-github"
+            >
+              <SiGithub className="h-4 w-4" />
+              GitHub
+            </a>
+            <Link href="/docs" onClick={() => setMobileMenuOpen(false)}>
+              <span
+                className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-muted-foreground hover-elevate cursor-pointer"
+                data-testid="link-mobile-docs"
+              >
+                <BookOpen className="h-4 w-4" />
+                Documentation
+              </span>
+            </Link>
+            <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+              <span
+                className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-primary font-medium hover-elevate cursor-pointer"
+                data-testid="link-mobile-dashboard"
+              >
+                <BarChart3 className="h-4 w-4" />
+                Dashboard
+              </span>
+            </Link>
+          </div>
+        )}
       </nav>
 
       <HeroSection />

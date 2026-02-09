@@ -1,0 +1,53 @@
+Please implement a new “Documentation” section in the web landing page navigation.
+
+NAVIGATION / UI
+- Add a new top-nav item labeled “Documentation” in the upper banner/navigation bar.
+- Place it BETWEEN the GitHub icon/link and the Dashboard icon/link.
+- On desktop: show it as a normal nav link.
+- On mobile: include it in the hamburger/menu in the same relative order.
+
+ROUTING
+- Create a new route/page: /docs (and/or /documentation if that’s the existing convention — prefer /docs).
+- The “Documentation” nav item must link to this route.
+
+DOCUMENTATION CONTENT (populate the /docs page)
+Create a documentation hub with a clean structure and internal navigation (sidebar or table of contents). Include at minimum these sections:
+
+1) Overview
+   - What is OpenFlama?
+   - Why OpenFlama exists (problem statement + goals)
+   - Core concepts: agentic runtime, pluggable LLM providers, forecasting/finance agents, etc.
+
+2) Quickstart
+   - Prerequisites (Node/Python, etc.)
+   - Setup steps (clone, install, env, run)
+   - How to run the web + API locally
+
+3) How-To Guides
+   - Configure LLM provider selection (Ollama / llama.cpp / Qwen, etc.)
+   - Example: running the Value Investing agent end-to-end
+   - Troubleshooting / FAQ
+
+4) Agents
+   - Agents overview and conventions
+   - A dedicated page/section: “Value Investing Agent”
+     - What it does
+     - Inputs/outputs schema
+     - How to run it (with Ollama and with stub provider)
+     - How to extend it / add a new agent
+
+SOURCE OF TRUTH
+- Use the repository documentation as the source of truth.
+- The web docs should be consistent with (and derived from) the GitHub docs/README content.
+- Do NOT copy-paste blindly: adapt formatting for the website, but keep wording accurate.
+- If docs are missing in the repo, add minimal placeholder content in the web docs AND create a TODO list referencing which GitHub docs should be added later.
+
+ACCEPTANCE CRITERIA
+- “Documentation” appears in the top nav between GitHub and Dashboard.
+- Clicking it opens a populated docs hub with the sections above.
+- Docs page has internal navigation (sidebar or TOC) and is readable/responsive.
+- No broken links; all referenced sections render correctly.
+
+If you can, I would love if you implement also this:
+“Prefer MDX or render Markdown from /docs folder at build-time, so the website stays synced with GitHub docs.”
+
