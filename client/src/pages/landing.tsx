@@ -346,7 +346,7 @@ function ContributeSection() {
         </motion.div>
 
         <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-4">
-          <a href="https://github.com/openflama" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/maquenflow/openflama" target="_blank" rel="noopener noreferrer">
             <Button size="lg" data-testid="button-contribute">
               <SiGithub className="mr-2 h-4 w-4" />
               Contribute on GitHub
