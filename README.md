@@ -2,6 +2,8 @@
 
 An open-source agentic finance runtime and forecasting engine.
 
+<img width="270" height="270" alt="flama_logo" src="https://github.com/user-attachments/assets/eeeef808-62bf-4b62-b2d6-dc3934fd185c" />
+
 OpenFlama provides quantitative forecasting with baseline models, walk-forward
 backtesting, and a pluggable architecture for financial agents.
 
