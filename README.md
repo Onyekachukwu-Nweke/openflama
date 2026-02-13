@@ -123,8 +123,7 @@ with issues and acceptance criteria.
 
 ## Discussions
 
-> **Note:** Enable GitHub Discussions in the repo settings (Settings > General > Features > Discussions)
-> for a dedicated Q&A and community space. Until then, use Issues for questions.
+Go to [Discussions](https://github.com/maquenflow/openflama/discussions)
 
 ## Documentation
 
